@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
+import * as firebase from 'firebase';
+import { firebaseConfig } from './utils';
 import {
   Start,
   Record,
   End
 } from './src/scenes'
 
-export default class App extends React.Component {
+export default class App extends Component {
+  componentWillMount() {
+    firebase.initializeApp(firebaseConfig);
+  }
   render() {
     return (
       <Router>
