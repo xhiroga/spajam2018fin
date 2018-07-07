@@ -4,7 +4,7 @@ import { Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
 
-export default class Start extends Component {
+export default class Record extends Component {
   render() {
     return (
       <Layout>
@@ -12,7 +12,7 @@ export default class Start extends Component {
           full
           onPress={() => Actions.record()}
         >
-          <Text>Start</Text>
+          <Text>End</Text>
         </StyledButton>
       </Layout>
     )

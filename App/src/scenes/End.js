@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
 import { Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
 
-export default class Start extends Component {
+export default class End extends Component {
   render() {
     return (
       <Layout>
         <StyledButton
           full
-          onPress={() => Actions.record()}
         >
           <Text>Start</Text>
         </StyledButton>
