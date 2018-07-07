@@ -1,1 +1,1 @@
-web: gunicorn Server/manage:app --log-file -
+web: gunicorn Server/manage.py:app --log-file -
