@@ -51,7 +51,7 @@ export default class Record extends Component {
       <Layout>
         <StyledButton
           full
-          onPress={() => Actions.record()}
+          onPress={() => Actions.end()}
         >
           <Text>{text}</Text>
           <Text>End</Text>
