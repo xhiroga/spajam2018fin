@@ -18,12 +18,11 @@ export default class End extends Component {
       .then(() => {
         Alert.alert(
           '画像を保存しました',
-          'My Alert Msg',
+          ' ',
           [
-            {text: 'OK', onPress: () => console.log('press Ok')},
-          ],
-          { cancelable: false }
-          )
+            {text: 'OK', onPress: () => console.log('press ok')}
+          ]
+        )
       });
   }
 

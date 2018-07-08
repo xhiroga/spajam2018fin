@@ -77,12 +77,6 @@ export default class Record extends Component {
   }
 
   render() {
-    // let text = 'Waiting..';
-    // if (this.state.locationErrorMessage) {
-    //   text = this.state.locationErrorMessage;
-    // } else if (this.state.location) {
-    //   text = JSON.stringify(this.state.location);
-    // }
 
     return (
       <BackGround>
@@ -122,8 +116,6 @@ const StopButton = styled(Button)`
   margin: 80px 10px 10px;
   background-color: #B1B1B1;
   border-radius: 5;
-;
-
 `
 
 const FinishButton = styled(Button)`
