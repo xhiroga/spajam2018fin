@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, CameraRoll } from 'react-native';
+import { Image, CameraRoll, Alert } from 'react-native';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
