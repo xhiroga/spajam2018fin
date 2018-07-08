@@ -9,3 +9,7 @@ python manage.py
 ```
 python -m unittest discover tests -v
 ```
+
+# 大事なこと
+緯度  いど    latitude   ←短い
+経度  けいど  longitude  ←長い
