@@ -68,19 +68,20 @@ export default class Record extends Component {
       .then(
         res => {
           console.log(res.data);
-          Actions.end({ url: res.data });
+          Actions.end();
         })
       .catch(
         err => {
           console.log(err.request);
-          Alert.alert(
-            'APIを叩く際にエラーが発生しました。',
-            '',
-            [
-              {text: 'OK', onPress: () => console.log('on press alert button')},
-            ],
-            { cancelable: false }
-          )
+          Actions.end();
+          // Alert.alert(
+          //   'APIを叩く際にエラーが発生しました。',
+          //   '',
+          //   [
+          //     {text: 'OK', onPress: () => console.log('on press alert button')},
+          //   ],
+          //   { cancelable: false }
+          // )
         });
     // Actions.end();
   }

@@ -8,15 +8,6 @@ import { Layout } from '../components/';
 const image = '../../img/Bitmap3.png';
 
 export default class End extends Component {
-  // construtor(props) {
-  //   super();
-  //   // console.log(props);
-  // }
-
-  componentDidMount() {
-    console.log('-----------------------------------')
-    // console.log(instanceof this.props.url);
-  }
 
   // 画像の保存
   onPressSave() {
@@ -44,7 +35,7 @@ export default class End extends Component {
           source={require('../../img/bg.png')}
         />
         <MainImage
-          source={{uri: url}}
+          source={require(image)}
         />
         <SNSImage
           source={require('../../img/btn5.png')}
