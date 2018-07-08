@@ -18,11 +18,11 @@ export default class App extends Component {
   render() {
     return (
       <StyledRouter>
-        <Scene key="root">
-          <Scene key="top" component={Top} title="Top" initial/>
-          <Scene key="start" component={Start} title="Start" />
-          <Scene key="record" component={Record} title="Record" />
-          <Scene key="end" component={End} title="End" />
+        <Scene key="root" navigationBarStyle={{ backgroundColor: '#59CADE'}}>
+          <Scene key="top" component={Top} title="Top" titleStyle={{ color: '#fff'}} initial/>
+          <Scene key="start" component={Start} titleStyle={{ color: '#fff'}} title="Start" />
+          <Scene key="record" component={Record} titleStyle={{ color: '#fff'}} title="Record" />
+          <Scene key="end" component={End} titleStyle={{ color: '#fff'}} title="End" />
         </Scene>
       </StyledRouter>
     );
