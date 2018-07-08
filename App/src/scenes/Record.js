@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { Layout } from '../components/';
 import { Platform } from 'react-native';
 import { w3wClient } from "../../utils/apiClient";
+import * as firebase from 'firebase';
+import moment from 'moment';
 
 export default class Record extends Component {
   constructor() {
@@ -22,7 +24,9 @@ export default class Record extends Component {
         locationErrorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
     } else {
-      this.getLocationAsync();
+      this.setState({
+        intervalId: setInterval(this.getLocationAsync, 3000)
+      });
     }
   }
 
@@ -36,8 +40,25 @@ export default class Record extends Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
+
+    this.writeLocationToFirebase(location);
     this.setState({ location });
   };
+
+  writeLocationToFirebase(location) {
+    firebase.database().ref("coodinates/" + moment().format()).set({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    });
+  }
+
+  onPressButton() {
+    clearInterval(this.state.intervalId);
+    this.setState({
+      intervalId: null
+    });
+    Actions.end();
+  }
 
   render() {
     let text = 'Waiting..';
@@ -51,7 +72,7 @@ export default class Record extends Component {
       <Layout>
         <StyledButton
           full
-          onPress={() => Actions.end()}
+          onPress={() => this.onPressButton()}
         >
           <Text>{text}</Text>
           <Text>End</Text>
