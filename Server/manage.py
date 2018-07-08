@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import os
 from flask import Flask
 app = Flask(__name__)
+from firebase import firebase
 
 @app.route('/')
 def retravel_url():
     # 1.firebaseからユーザーの移動履歴を取得する
+    # Use a service account
+    firebase = firebase.FirebaseApplication(os.environ["FIREBASE_DATABASE_URL"], None)
+    result = firebase.get('/spajamlast', None)
+    print(result)
 
     # 2.ユーザの移動履歴を引数にSingsをインスタンス化する。
     # sings = Sings(move_history)
