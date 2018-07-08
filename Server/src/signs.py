@@ -1,9 +1,6 @@
 import os
 import requests
 
-BASE_URL = "https://api.what3words.com/v2"
-API_KEY = os.environ["RETRAVEL_W3W_API_KEY"]
-print("RETRAVEL_W3W_API_KEY", API_KEY)
 SIGN_NUMBER = 10
 
 class Signs():
@@ -15,7 +12,7 @@ class Signs():
         cnt = 1
         for coords in self.coords_array:
             if SIGN_NUMBER*times >= cnt and cnt%times == 0:
-                self.signs.append(coords)
+                self.signs.append([coords["latitude"], coords["longitude"]])
             cnt = cnt + 1
 
     def northside(self):
