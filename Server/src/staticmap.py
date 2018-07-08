@@ -1,7 +1,10 @@
+import urllib
+
 GOOGLE_MAPS_STATIC_MAP_ENDPOINT = "https://maps.googleapis.com/maps/api/staticmap"
 GOOGLE_MAPS_API_KEY = "AIzaSyAVvDiYWi12dWl91LsNtQ2RVsSe3aa736A" # Personal Key of Nao Haida
 MARKER_COLOR_CODE = "0xF02B60"
 PATH_COLOR_CODE = "0xF02B60FF"
+IMAGE_CONVERTER_HOST_NAME = "https://retravel-node.herokuapp.com"
 MAP_STYLE = [
   {
     "elementType": "geometry",
@@ -241,7 +244,7 @@ class Staticmap():
         # Write path to the map
         path_points = []
         for i in range(len(self.path_points)):
-            path_points.append(str(self.path_points[i]['lat']) + ',' + str(self.path_points[i]['lng']))
+            path_points.append(str(self.path_points[i]['latitude']) + ',' + str(self.path_points[i]['longitude']))
         params_hash.append({'key': 'path', 'val': "color:"+ PATH_COLOR_CODE + "|weight:3|" + '|'.join(path_points)})
 
         # Put sugoroku_pooints on the map
@@ -255,20 +258,28 @@ class Staticmap():
             elif(i!= 0 and i == len(self.sugoroku_points) -1):
                 icon_label = "size:mid%7Ccolor:" + MARKER_COLOR_CODE + "%7Clabel:G%7C"
 
-            params_hash.append({'key': "markers", 'val': icon_label + str(self.sugoroku_points[i]['lat']) + ',' + str(self.sugoroku_points[i]['lng'])})
+            params_hash.append({'key': "markers", 'val': icon_label + str(self.sugoroku_points[i]['latitude']) + ',' + str(self.sugoroku_points[i]['longitude'])})
 
         # Construct API URL
         for i in range(len(params_hash)):
             params.append(params_hash[i]['key'] + "=" + params_hash[i]['val'])
-        url = GOOGLE_MAPS_STATIC_MAP_ENDPOINT + '?' + '&'.join(params)
-        return url
+        googleMapsUrl = GOOGLE_MAPS_STATIC_MAP_ENDPOINT + '?' + '&'.join(params)
 
+        # Add Overlay
+        converter_url = IMAGE_CONVERTER_HOST_NAME + "/addBadge?" + urllib.urlencode([('baseUrl', googleMapsUrl)])
+        result = None
+        try :
+            result = urllib.urlopen(converter_url).read()
+        except ValueError :
+            print "Access Failed"
+
+        return result
 
 ## Example Codes
 """
-path_points = [{'lat': 35.2465552, 'lng': 139.0449135},{'lat': 35.2459945, 'lng': 139.0728085}, {'lat': 35.246765, 'lng': 139.136580}, {'lat': 35.244872, 'lng': 139.127052}, {'lat': 35.241087, 'lng': 139.121817}, {'lat':35.236881, 'lng': 139.115894}, {'lat': 35.232885, 'lng': 139.101818}, {'lat': 35.232324, 'lng': 139.091518}, {'lat': 35.235128, 'lng': 139.078815}, {'lat': 35.241437, 'lng': 139.065426},{'lat': 35.243540, 'lng': 139.059246}, {'lat': 35.241297, 'lng': 139.054955}, {'lat': 35.254054, 'lng': 139.050320}, {'lat': 35.258120, 'lng': 139.040363}, {'lat': 35.261624, 'lng': 139.027145}, {'lat': 35.2347075, 'lng': 139.0348702},{'lat': 35.263726, 'lng': 139.013069}, {'lat': 35.261484, 'lng': 139.004658}, {'lat': 35.256157, 'lng': 139.000710}, {'lat': 35.2530038, 'lng': 138.9700691}]
+path_points = [{'latitude': 35.2465552, 'longitude': 139.0449135},{'latitude': 35.2459945, 'longitude': 139.0728085}, {'latitude': 35.246765, 'longitude': 139.136580}, {'latitude': 35.244872, 'longitude': 139.127052}, {'latitude': 35.241087, 'longitude': 139.121817}, {'latitude':35.236881, 'longitude': 139.115894}, {'latitude': 35.232885, 'longitude': 139.101818}, {'latitude': 35.232324, 'longitude': 139.091518}, {'latitude': 35.235128, 'longitude': 139.078815}, {'latitude': 35.241437, 'longitude': 139.065426},{'latitude': 35.243540, 'longitude': 139.059246}, {'latitude': 35.241297, 'longitude': 139.054955}, {'latitude': 35.254054, 'longitude': 139.050320}, {'latitude': 35.258120, 'longitude': 139.040363}, {'latitude': 35.261624, 'longitude': 139.027145}, {'latitude': 35.2347075, 'longitude': 139.0348702},{'latitude': 35.263726, 'longitude': 139.013069}, {'latitude': 35.261484, 'longitude': 139.004658}, {'latitude': 35.256157, 'longitude': 139.000710}, {'latitude': 35.2530038, 'longitude': 138.9700691}]
 
-sugoroku_points = [{'lat': 35.2465552, 'lng': 139.0449135},{'lat': 35.246765, 'lng': 139.136580}, {'lat': 35.241087, 'lng': 139.121817}, {'lat': 35.232885, 'lng': 139.101818}, {'lat': 35.235128, 'lng': 139.078815}, {'lat': 35.243540, 'lng': 139.059246}, {'lat': 35.258120, 'lng': 139.040363},  {'lat': 35.2347075, 'lng': 139.0348702}, {'lat': 35.261484, 'lng': 139.004658}, {'lat': 35.2530038, 'lng': 138.9700691}]
+sugoroku_points = [{'latitude': 35.2465552, 'longitude': 139.0449135},{'latitude': 35.246765, 'longitude': 139.136580}, {'latitude': 35.241087, 'longitude': 139.121817}, {'latitude': 35.232885, 'longitude': 139.101818}, {'latitude': 35.235128, 'longitude': 139.078815}, {'latitude': 35.243540, 'longitude': 139.059246}, {'latitude': 35.258120, 'longitude': 139.040363},  {'latitude': 35.2347075, 'longitude': 139.0348702}, {'latitude': 35.261484, 'longitude': 139.004658}, {'latitude': 35.2530038, 'longitude': 138.9700691}]
 
 staticmap = Staticmap(path_points, sugoroku_points)
 url = staticmap.create_map()
