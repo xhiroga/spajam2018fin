@@ -1,5 +1,7 @@
 GOOGLE_MAPS_STATIC_MAP_ENDPOINT = "https://maps.googleapis.com/maps/api/staticmap"
 GOOGLE_MAPS_API_KEY = "AIzaSyAVvDiYWi12dWl91LsNtQ2RVsSe3aa736A" # Personal Key of Nao Haida
+MARKER_COLOR_CODE = "0xF02B60"
+PATH_COLOR_CODE = "0xF02B60FF"
 MAP_STYLE = [
   {
     "elementType": "geometry",
@@ -217,7 +219,7 @@ class Staticmap():
         params_hash = []
 
         # Google Maps API Request Parameter Settings
-        params_hash.append({'key': "size", 'val': "564x396"})
+        params_hash.append({'key': "size", 'val': "1128x792"})
         params_hash.append({'key': "format", 'val': "png"})
         params_hash.append({'key': "key", 'val': GOOGLE_MAPS_API_KEY})
         params_hash.append({'key': "language", 'val': 'ja'})
@@ -240,11 +242,20 @@ class Staticmap():
         path_points = []
         for i in range(len(self.path_points)):
             path_points.append(str(self.path_points[i]['lat']) + ',' + str(self.path_points[i]['lng']))
-        params_hash.append({'key': 'path', 'val': "color:0x0000ff|weight:5|" + '|'.join(path_points)})
+        params_hash.append({'key': 'path', 'val': "color:"+ PATH_COLOR_CODE + "|weight:3|" + '|'.join(path_points)})
 
         # Put sugoroku_pooints on the map
+        # TODO: Should restrict #of markers less than 13
         for i in range(len(self.sugoroku_points)):
-            params_hash.append({'key': "markers", 'val': "color:blue%7Clabel:" + str(i + 1) + "%7C" + str(self.sugoroku_points[i]['lat']) + ',' + str(self.sugoroku_points[i]['lng'])})
+            icon_label = ""
+            if(i == 0):
+                icon_label = "size:mid%7Ccolor:" + MARKER_COLOR_CODE + "%7Clabel:S%7C"
+            elif(i > 0 and i < len(self.sugoroku_points) - 1):
+                icon_label = "size:mid%7Ccolor:" + MARKER_COLOR_CODE + "%7Clabel:" + str(i)+ "%7C"
+            elif(i!= 0 and i == len(self.sugoroku_points) -1):
+                icon_label = "size:mid%7Ccolor:" + MARKER_COLOR_CODE + "%7Clabel:G%7C"
+
+            params_hash.append({'key': "markers", 'val': icon_label + str(self.sugoroku_points[i]['lat']) + ',' + str(self.sugoroku_points[i]['lng'])})
 
         # Construct API URL
         for i in range(len(params_hash)):
