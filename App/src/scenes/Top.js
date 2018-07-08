@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button, Text, View } from 'native-base';
+import { Button, Text, View} from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
 
@@ -8,9 +9,12 @@ export default class Top extends Component {
   render() {
     return (
       <BackGround>
-        <TopBoard>
-          何回だって、旅に出よう
-        </TopBoard>
+        <TopImage
+          source={require('../../img/title.png')}
+        />
+        <FliteImage
+          source={require('../../img/flyer.png')}
+        />
         <StyledButton
           full
           onPress={() => Actions.start()}
@@ -27,6 +31,18 @@ const TopBoard = styled(View)`
   border: 3px solid #fff;
   flex: 0.3;
   backgroundColor: rgb(89, 202, 222);
+`
+
+const TopImage = styled(Image)`
+  width: 320px;
+  height: 165px;
+  margin: 30px 7%;
+`
+
+const FliteImage = styled(Image)`
+  width: 320px;
+  height: 160px;
+  margin: 30px 7%;
 `
 
 const BackGround = styled(View)`
