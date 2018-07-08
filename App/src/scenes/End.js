@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Image, CameraRoll, Alert } from 'react-native';
+import { Image, Alert } from 'react-native';
+import CameraRollExtended from 'react-native-store-photos-album';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
@@ -14,7 +15,7 @@ export default class End extends Component {
     Promise
       .resolve()
       .then(() => {
-        CameraRoll.saveToCameraRoll(image);
+        CameraRollExtended.saveToCameraRoll({uri: image, album: 'Test'}, 'photo')
       })
       .then(() => {
         Alert.alert(

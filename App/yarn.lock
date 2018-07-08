@@ -6024,6 +6024,10 @@ react-native-snap-carousel@^3.7.2:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
+react-native-store-photos-album@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-store-photos-album/-/react-native-store-photos-album-0.1.2.tgz#205bba754c27e45f6fcbdd53072afa42629e1c58"
+
 react-native-svg-web@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-svg-web/-/react-native-svg-web-1.0.1.tgz#16e1784077b6e5b6c7ebd9c3829e6684211cba99"
