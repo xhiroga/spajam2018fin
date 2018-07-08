@@ -271,7 +271,7 @@ class Staticmap():
         try :
             result = urllib.urlopen(converter_url).read()
         except ValueError :
-            print "Access Failed"
+            print ("Access Failed")
 
         return result
 
