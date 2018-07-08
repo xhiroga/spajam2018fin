@@ -54,9 +54,11 @@ const BackGround = styled(View)`
 const StyledButton = styled(Button)`
   margin: 250px 10px 15px;
   background-color: #F02B60;
+  border-radius: 5;
 `
 const StyledImage = styled(Image)`
-  width: 80%;
+  width: 292px;
+  height: 143px;
   top: 150px;
   right: 10%;
   bottom: 0px;

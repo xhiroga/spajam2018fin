@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { Constants, Location, Permissions } from 'expo';
-import { Button, Text } from 'native-base';
+import { View, Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
 import { Platform, Image } from 'react-native';
@@ -77,15 +77,9 @@ export default class Record extends Component {
   }
 
   render() {
-    // let text = 'Waiting..';
-    // if (this.state.locationErrorMessage) {
-    //   text = this.state.locationErrorMessage;
-    // } else if (this.state.location) {
-    //   text = JSON.stringify(this.state.location);
-    // }
 
     return (
-      <StyledLayout>
+      <BackGround>
         <CycleImage
           source={require('../../img/circle.png')}
         />
@@ -101,12 +95,12 @@ export default class Record extends Component {
         >
           <Text>旅の記録を終了</Text>
         </FinishButton>
-      </StyledLayout>
+      </BackGround>
     )
   }
 }
 
-const StyledLayout = styled(Layout)`
+const BackGround = styled(View)`
   backgroundColor: rgb(189, 231, 240);
   flex: 1;
 `
@@ -119,14 +113,13 @@ const CycleImage = styled(Image)`
 `
 
 const StopButton = styled(Button)`
-  margin: 10px;
-  backgroundColor: rgb(216, 216, 216);
-  border-radius: 10;
-
+  margin: 80px 10px 10px;
+  background-color: #B1B1B1;
+  border-radius: 5;
 `
 
 const FinishButton = styled(Button)`
   margin: 10px;
-  border-radius: 10;
-  backgroundColor: rgb(240, 43, 96);
+  border-radius: 5;
+  background-color: #F02B60;
 `

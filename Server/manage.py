@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json, os, sys
+import cloudinary
 from flask import Flask
 app = Flask(__name__)
 import pyrebase
