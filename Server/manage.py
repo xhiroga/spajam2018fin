@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
-import json
-import os
+import json, os, sys
 from flask import Flask
 app = Flask(__name__)
 import pyrebase
+sys.path.append("src/")
+from signs import Signs
 
 config = {
   "apiKey": os.environ["FIREBASE_API_KEY"],
@@ -27,7 +27,7 @@ def retravel_url():
         COORDS_HISOTRY.append(jl[key])
 
     # 2.ユーザの移動履歴を引数にSingsをインスタンス化する。
-    sings = Sings(COORDS_HISOTRY)
+    signs = Signs(COORDS_HISOTRY)
 
     # 3.singsを元に静的地図の画像を作成する。
     # static_map = StaticMap(sings)
