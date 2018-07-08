@@ -1,20 +1,33 @@
 # -*- coding: utf-8 -*-
 
+import json
 import os
 from flask import Flask
 app = Flask(__name__)
-from firebase import firebase
+import pyrebase
+
+config = {
+  "apiKey": os.environ["FIREBASE_API_KEY"],
+  "authDomain": os.environ["FIREBASE_AUTH_DOMAIN"],
+  "databaseURL": os.environ["FIREBASE_DATABASE_URL"],
+  "storageBucket": os.environ["FIREBASE_STORAGE_BUCKET"]
+}
+firebase = pyrebase.initialize_app(config)
 
 @app.route('/')
 def retravel_url():
     # 1.firebaseからユーザーの移動履歴を取得する
-    # Use a service account
-    firebase = firebase.FirebaseApplication(os.environ["FIREBASE_DATABASE_URL"], None)
-    result = firebase.get('/spajamlast', None)
-    print(result)
+    # db = firebase.database()
+    # ref = db.child("spajamlast").child("coodinates").get()
+    # print(ref.val())
+    f = open('tests/json/spajamlast-coodinates-export.json')
+    jl = json.load(f)
+    COORDS_HISOTRY = []
+    for key in jl.keys():
+        COORDS_HISOTRY.append(jl[key])
 
     # 2.ユーザの移動履歴を引数にSingsをインスタンス化する。
-    # sings = Sings(move_history)
+    sings = Sings(COORDS_HISOTRY)
 
     # 3.singsを元に静的地図の画像を作成する。
     # static_map = StaticMap(sings)

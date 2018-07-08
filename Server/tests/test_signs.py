@@ -1,22 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, unittest
+import json, os, sys, unittest
 sys.path.append("src/")
 from signs import Signs
 
-COORDS_HISOTRY = [
-    (1, 50),
-    (2, 49),
-    (3, 48),
-    (4, 47),
-    (5, 46),
-    (6, 45),
-    (7, 44),
-    (8, 43),
-    (9, 42),
-    (10, 41),
-    (11, 40)
-]
+f = open('tests/json/spajamlast-coodinates-export.json')
+jl = json.load(f)
+COORDS_HISOTRY = []
+for key in jl.keys():
+    COORDS_HISOTRY.append(jl[key])
 
 class SingsTest(unittest.TestCase):
     # 11個以上の引数を受け取っても10個にサマって返す。
@@ -28,24 +20,24 @@ class SingsTest(unittest.TestCase):
 
     def test_northside(self):
         s = Signs(COORDS_HISOTRY)
-        expect = 10
+        expect = 37.785834
         actual = s.northside()
         self.assertEqual(expect, actual)
 
     def test_southside(self):
         s = Signs(COORDS_HISOTRY)
-        expect = 1
+        expect = 37.785834
         actual = s.southside()
         self.assertEqual(expect, actual)
 
     def test_eastside(self):
         s = Signs(COORDS_HISOTRY)
-        expect = 50
+        expect = -122.406417
         actual = s.eastside()
         self.assertEqual(expect, actual)
 
     def test_westside(self):
         s = Signs(COORDS_HISOTRY)
-        expect = 41
+        expect = -122.406417
         actual = s.westside()
         self.assertEqual(expect, actual)
