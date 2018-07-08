@@ -4,8 +4,8 @@ import { Constants, Location, Permissions } from 'expo';
 import { View, Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
-import { Platform, Image } from 'react-native';
-import { w3wClient } from "../../utils/apiClient";
+import { Platform, Image, Alert } from 'react-native';
+import { w3wClient, sawaraClient } from "../../utils/apiClient";
 import * as firebase from 'firebase';
 import moment from 'moment';
 
@@ -15,7 +15,8 @@ export default class Record extends Component {
     this.state = {
       location: null,
       locationErrorMessage: null,
-      buttonName: "一時停止"
+      buttonName: "一時停止",
+      status: false
     };
   }
 
@@ -26,7 +27,8 @@ export default class Record extends Component {
       });
     } else {
       this.setState({
-        intervalId: setInterval(this.getLocationAsync, 3000)
+        intervalId: setInterval(this.getLocationAsync, 3000),
+        status: true
       });
     }
   }
@@ -56,22 +58,46 @@ export default class Record extends Component {
   onPressButton() {
     clearInterval(this.state.intervalId);
     this.setState({
-      intervalId: null
+      intervalId: null,
+      status: false
     });
-    Actions.end();
+
+    // sawaraAPIができ次第コメントを外す
+
+    sawaraClient.get("/")
+      .then(
+        res => {
+          console.log(res.data);
+          Actions.end({ url: res.data });
+        })
+      .catch(
+        err => {
+          console.log(err.request);
+          Alert.alert(
+            'APIを叩く際にエラーが発生しました。',
+            '',
+            [
+              {text: 'OK', onPress: () => console.log('on press alert button')},
+            ],
+            { cancelable: false }
+          )
+        });
+    // Actions.end();
   }
 
   onPressCancelButton() {
     if (this.state.intervalId == null) {
       this.setState({
         intervalId: setInterval(this.getLocationAsync, 3000),
-        buttonName: '一時停止'
+        buttonName: '一時停止',
+        status: true
       });
     } else {
       clearInterval(this.state.intervalId);
       this.setState({
         intervalId: null,
-        buttonName: '再開'
+        buttonName: '再開',
+        status: false
       });
     }
   }
@@ -80,9 +106,15 @@ export default class Record extends Component {
 
     return (
       <BackGround>
-        <CycleImage
-          source={require('../../img/circle.png')}
-        />
+        {
+          this.state.status
+          ? (<CycleImage
+              source={require('../../img/circle.png')}
+            />)
+          : (<CycleImage
+              source={require('../../img/circle2.png')}
+            />)
+        }
         <StopButton
           full
           onPress={() => this.onPressCancelButton()}

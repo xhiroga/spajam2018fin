@@ -5,9 +5,18 @@ import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import { Layout } from '../components/';
 
-const image = '../../img/image.png';
+const image = '../../img/Bitmap3.png';
 
 export default class End extends Component {
+  // construtor(props) {
+  //   super();
+  //   // console.log(props);
+  // }
+
+  componentDidMount() {
+    console.log('-----------------------------------')
+    // console.log(instanceof this.props.url);
+  }
 
   // 画像の保存
   onPressSave() {
@@ -28,13 +37,14 @@ export default class End extends Component {
   }
 
   render() {
+    const {url} = this.props;
     return (
       <BackGround>
         <BGImage
           source={require('../../img/bg.png')}
         />
         <MainImage
-          source={require(image)}
+          source={{uri: url}}
         />
         <SNSImage
           source={require('../../img/btn5.png')}

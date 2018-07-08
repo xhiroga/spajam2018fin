@@ -7,6 +7,12 @@ const w3wClient = axios.create({
   headers: {"X-Api-Key": W3WKey}
 });
 
+const sawaraClient = axios.create({
+  baseURL: "https://retravel.herokuapp.com/",
+  timout: 5000,
+})
+
 export {
-  w3wClient
+  w3wClient,
+  sawaraClient
 };
