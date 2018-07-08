@@ -266,10 +266,10 @@ class Staticmap():
         googleMapsUrl = GOOGLE_MAPS_STATIC_MAP_ENDPOINT + '?' + '&'.join(params)
 
         # Add Overlay
-        converter_url = IMAGE_CONVERTER_HOST_NAME + "/addBadge?" + urllib.urlencode([('baseUrl', googleMapsUrl)])
+        converter_url = IMAGE_CONVERTER_HOST_NAME + "/addBadge?" + urllib.parse.urlencode([('baseUrl', googleMapsUrl)])
         result = None
         try :
-            result = urllib.urlopen(converter_url).read()
+            result = urllib.request.urlopen(converter_url).read()
         except ValueError :
             print ("Access Failed")
 
