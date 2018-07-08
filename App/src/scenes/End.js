@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, CameraRoll } from 'react-native';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
 
+const image = '../../img/image.png';
+
 export default class End extends Component {
+
+  // 画像の保存
+  onPressSave() {
+    Promise
+      .resolve()
+      .then(() => {
+        CameraRoll.saveToCameraRoll(image);
+      })
+      .then(() => {
+        Alert.alert(
+          '画像を保存しました',
+          'My Alert Msg',
+          [
+            {text: 'OK', onPress: () => console.log('press Ok')},
+          ],
+          { cancelable: false }
+          )
+      });
+  }
+
   render() {
     return (
       <BackGround>
@@ -12,14 +34,19 @@ export default class End extends Component {
           source={require('../../img/bg.png')}
         />
         <MainImage
-          source={require('../../img/image.png')}
+          source={require(image)}
         />
         <SNSImage
           source={require('../../img/btn5.png')}
         />
-        <BackImage
-          source={require('../../img/btn6.png')}
-        />
+        <BackButton
+          title={' '}
+          onPress={() => this.onPressSave()}
+        >
+          <BackImage
+            source={require('../../img/btn6.png')}
+          />
+        </BackButton>
         <StyledButton
           full
         >
@@ -58,12 +85,17 @@ const SNSImage = styled(Image)`
   height: 40px;
 `
 
-const BackImage = styled(Image)`
+const BackButton = styled(Button)`
   position: absolute;
   top: 445px;
   right: 70px;
-  width: 110px;
+  opacity: 1;
+  height: 39px;
+`
+
+const BackImage = styled(Image)`
   height: 40px;
+  width: 110px;
 `
 
 const StyledButton = styled(Button)`
