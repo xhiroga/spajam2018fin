@@ -5,6 +5,7 @@ app = Flask(__name__)
 import pyrebase
 sys.path.append("src/")
 from signs import Signs
+from staticmap import Staticmap
 
 config = {
   "apiKey": os.environ["FIREBASE_API_KEY"],
@@ -30,14 +31,14 @@ def retravel_url():
     signs = Signs(COORDS_HISOTRY)
 
     # 3.singsを元に静的地図の画像を作成する。
-    # static_map = StaticMap(sings)
-    # static_map_url = static_map.url
+    staticmap = Staticmap(COORDS_HISOTRY, signs.signs)
+    redered_url = staticmap.create_map()
 
     # 4.static_map_urlを元にツイート付きの上下地図を合成する。
     # ?未定 Cloudinaryなど使用する？
 
     # 5.スマホにリクエストを返す
-    return 'https://res.cloudinary.com/hwhaxlz5c/image/upload/v1530998382/staticmap.png'
+    return redered_url
 
 if __name__ == '__main__':
     app.run()

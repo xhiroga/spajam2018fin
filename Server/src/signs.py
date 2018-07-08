@@ -12,34 +12,34 @@ class Signs():
         cnt = 1
         for coords in self.coords_array:
             if SIGN_NUMBER*times >= cnt and cnt%times == 0:
-                self.signs.append([coords["latitude"], coords["longitude"]])
+                self.signs.append(coords)
             cnt = cnt + 1
 
     def northside(self):
-        northside = self.signs[0][0]
+        northside = self.signs[0]["latitude"]
         for sign in self.signs:
-            if northside < sign[0]:
-                northside = sign[0]
+            if northside < sign["latitude"]:
+                northside = sign["latitude"]
         return northside
 
     def southside(self):
-        southside = self.signs[0][0]
+        southside = self.signs[0]["latitude"]
         for sign in self.signs:
-            if southside > sign[0]:
-                southside = sign[0]
+            if southside > sign["latitude"]:
+                southside = sign["latitude"]
         return southside
 
     def eastside(self):
-        eastside = self.signs[0][1]
+        eastside = self.signs[0]["longitude"]
         for sign in self.signs:
-            if eastside < sign[1]:
-                eastside = sign[1]
+            if eastside < sign["longitude"]:
+                eastside = sign["longitude"]
         return eastside
 
     def westside(self):
-        westside = self.signs[0][1]
+        westside = self.signs[0]["longitude"]
         for sign in self.signs:
-            if westside > sign[1]:
-                westside = sign[1]
+            if westside > sign["longitude"]:
+                westside = sign["longitude"]
         return westside
 
