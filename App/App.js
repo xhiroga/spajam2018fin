@@ -7,7 +7,8 @@ import {
   Top,
   Start,
   Record,
-  End
+  End,
+  MemoryList
 } from './src/scenes'
 
 export default class App extends Component {
@@ -20,6 +21,7 @@ export default class App extends Component {
       <StyledRouter>
         <Scene key="root" navigationBarStyle={{ backgroundColor: '#59CADE'}} >
           <Scene key="top" component={Top} title="ホーム" titleStyle={{ color: '#fff'}} initial/>
+          <Scene key="memory" component={MemoryList} title="思い出" titleStyle={{ color: '#fff'}} />
           <Scene key="start" component={Start} titleStyle={{ color: '#fff'}} headerBackTitleStyle={{ color: '#fff' }} title="タグをつける" />
           <Scene key="record" component={Record} titleStyle={{ color: '#fff'}} headerBackTitleStyle={{ color: '#fff' }} title="ログをとる" />
           <Scene key="end" component={End} titleStyle={{ color: '#fff'}} headerBackTitleStyle={{ color: '#fff' }} title="完成" />

@@ -1,7 +1,10 @@
+import urllib
+
 GOOGLE_MAPS_STATIC_MAP_ENDPOINT = "https://maps.googleapis.com/maps/api/staticmap"
 GOOGLE_MAPS_API_KEY = "AIzaSyAVvDiYWi12dWl91LsNtQ2RVsSe3aa736A" # Personal Key of Nao Haida
 MARKER_COLOR_CODE = "0xF02B60"
 PATH_COLOR_CODE = "0xF02B60FF"
+IMAGE_CONVERTER_HOST_NAME = "https://retravel-node.herokuapp.com"
 MAP_STYLE = [
   {
     "elementType": "geometry",
@@ -260,13 +263,20 @@ class Staticmap():
         # Construct API URL
         for i in range(len(params_hash)):
             params.append(params_hash[i]['key'] + "=" + params_hash[i]['val'])
-        url = GOOGLE_MAPS_STATIC_MAP_ENDPOINT + '?' + '&'.join(params)
-        return url
+        googleMapsUrl = GOOGLE_MAPS_STATIC_MAP_ENDPOINT + '?' + '&'.join(params)
 
+        # Add Overlay
+        converter_url = IMAGE_CONVERTER_HOST_NAME + "/add_badge?" + urllib.urlencode([('baseUrl', googleMapsUrl)])
+        result = None
+        try :
+            result = urllib.urlopen(converter_url).read()
+        except ValueError :
+            print "Access Failed"
+
+        return result
 
 ## Example Codes
 """
-# Staticmap test
 path_points = [{'latitude': 35.2465552, 'longitude': 139.0449135},{'latitude': 35.2459945, 'longitude': 139.0728085}, {'latitude': 35.246765, 'longitude': 139.136580}, {'latitude': 35.244872, 'longitude': 139.127052}, {'latitude': 35.241087, 'longitude': 139.121817}, {'latitude':35.236881, 'longitude': 139.115894}, {'latitude': 35.232885, 'longitude': 139.101818}, {'latitude': 35.232324, 'longitude': 139.091518}, {'latitude': 35.235128, 'longitude': 139.078815}, {'latitude': 35.241437, 'longitude': 139.065426},{'latitude': 35.243540, 'longitude': 139.059246}, {'latitude': 35.241297, 'longitude': 139.054955}, {'latitude': 35.254054, 'longitude': 139.050320}, {'latitude': 35.258120, 'longitude': 139.040363}, {'latitude': 35.261624, 'longitude': 139.027145}, {'latitude': 35.2347075, 'longitude': 139.0348702},{'latitude': 35.263726, 'longitude': 139.013069}, {'latitude': 35.261484, 'longitude': 139.004658}, {'latitude': 35.256157, 'longitude': 139.000710}, {'latitude': 35.2530038, 'longitude': 138.9700691}]
 
 sugoroku_points = [{'latitude': 35.2465552, 'longitude': 139.0449135},{'latitude': 35.246765, 'longitude': 139.136580}, {'latitude': 35.241087, 'longitude': 139.121817}, {'latitude': 35.232885, 'longitude': 139.101818}, {'latitude': 35.235128, 'longitude': 139.078815}, {'latitude': 35.243540, 'longitude': 139.059246}, {'latitude': 35.258120, 'longitude': 139.040363},  {'latitude': 35.2347075, 'longitude': 139.0348702}, {'latitude': 35.261484, 'longitude': 139.004658}, {'latitude': 35.2530038, 'longitude': 138.9700691}]
