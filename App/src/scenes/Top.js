@@ -51,7 +51,7 @@ const BackGround = styled(View)`
 `
 
 const StyledButton = styled(Button)`
-  margin: 15px 10px;
+  margin: 60px 10px 15px;
   backgroundColor: rgb(240, 43, 96);
-  border-radius: 50;
+  border-radius: 5;
 `
