@@ -21,6 +21,12 @@ export default class Top extends Component {
         >
           <Text>初めての旅を開始</Text>
         </StyledButton>
+        <StyledGrayButton
+          full
+          onPress={() => Actions.memory()}
+        >
+          <Text>思い出を見る</Text>
+        </StyledGrayButton>
       </BackGround>
     )
   }
@@ -51,7 +57,13 @@ const BackGround = styled(View)`
 `
 
 const StyledButton = styled(Button)`
-  margin: 60px 10px 15px;
+  margin: 30px 10px 15px;
   backgroundColor: rgb(240, 43, 96);
   border-radius: 5;
+`
+
+const StyledGrayButton = styled(Button)`
+  margin: 10px;
+  border-radius: 5;
+  background-color: #B1B1B1;
 `
