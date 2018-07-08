@@ -57,11 +57,12 @@ const StyledButton = styled(Button)`
   border-radius: 5;
 `
 const StyledImage = styled(Image)`
-  width: 90%;
+  width: 292px;
+  height: 143px;
   top: 150px;
-  right: 5%;
+  right: 10%;
   bottom: 0px;
-  left: 5%;
+  left: 10%;
   margin: 0 auto;
   position: absolute;
   z-index: -1;
