@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Image, CameraRoll, Alert } from 'react-native';
+import { Image, Alert } from 'react-native';
+import CameraRollExtended from 'react-native-store-photos-album';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import { Layout } from '../components/';
 
-const image = '../../img/image.png';
+const image = '../../img/Bitmap3.png';
 
 export default class End extends Component {
 
@@ -14,7 +15,7 @@ export default class End extends Component {
     Promise
       .resolve()
       .then(() => {
-        CameraRoll.saveToCameraRoll(image);
+        CameraRollExtended.saveToCameraRoll({uri: image, album: 'Test'}, 'photo')
       })
       .then(() => {
         Alert.alert(
@@ -28,6 +29,7 @@ export default class End extends Component {
   }
 
   render() {
+    const {url} = this.props;
     return (
       <BackGround>
         <BGImage
