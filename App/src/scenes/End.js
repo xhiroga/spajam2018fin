@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, CameraRoll, Alert } from 'react-native';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
+import { Actions } from 'react-native-router-flux';
 import { Layout } from '../components/';
 
 const image = '../../img/image.png';
@@ -48,6 +49,7 @@ export default class End extends Component {
         </BackButton>
         <StyledButton
           full
+          onPress={() => Actions.popTo('top')}
         >
           <Text>ホームに戻る</Text>
         </StyledButton>
