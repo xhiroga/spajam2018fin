@@ -4,7 +4,7 @@ import { Constants, Location, Permissions } from 'expo';
 import { Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
-import { Platform } from 'react-native';
+import { Platform, Image } from 'react-native';
 import { w3wClient } from "../../utils/apiClient";
 import * as firebase from 'firebase';
 import moment from 'moment';
@@ -14,7 +14,8 @@ export default class Record extends Component {
     super();
     this.state = {
       location: null,
-      locationErrorMessage: null
+      locationErrorMessage: null,
+      buttonName: "一時停止"
     };
   }
 
@@ -60,28 +61,72 @@ export default class Record extends Component {
     Actions.end();
   }
 
-  render() {
-    let text = 'Waiting..';
-    if (this.state.locationErrorMessage) {
-      text = this.state.locationErrorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
+  onPressCancelButton() {
+    if (this.state.intervalId == null) {
+      this.setState({
+        intervalId: setInterval(this.getLocationAsync, 3000),
+        buttonName: '一時停止'
+      });
+    } else {
+      clearInterval(this.state.intervalId);
+      this.setState({
+        intervalId: null,
+        buttonName: '再開'
+      });
     }
+  }
+
+  render() {
+    // let text = 'Waiting..';
+    // if (this.state.locationErrorMessage) {
+    //   text = this.state.locationErrorMessage;
+    // } else if (this.state.location) {
+    //   text = JSON.stringify(this.state.location);
+    // }
 
     return (
-      <Layout>
-        <StyledButton
+      <StyledLayout>
+        <CycleImage
+          source={require('../../img/circle.png')}
+        />
+        <StopButton
+          full
+          onPress={() => this.onPressCancelButton()}
+        >
+          <Text>{this.state.buttonName}</Text>
+        </StopButton>
+        <FinishButton
           full
           onPress={() => this.onPressButton()}
         >
-          <Text>{text}</Text>
-          <Text>End</Text>
-        </StyledButton>
-      </Layout>
+          <Text>旅の記録を終了</Text>
+        </FinishButton>
+      </StyledLayout>
     )
   }
 }
 
-const StyledButton = styled(Button)`
-  margin: 15px 10px;
+const StyledLayout = styled(Layout)`
+  backgroundColor: rgb(189, 231, 240);
+  flex: 1;
+`
+
+const CycleImage = styled(Image)`
+  width: 300px;
+  height: 309px;
+  margin: 10px auto;
+  marginTop: 50px;
+`
+
+const StopButton = styled(Button)`
+  margin: 10px;
+  backgroundColor: rgb(216, 216, 216);
+  border-radius: 10;
+
+`
+
+const FinishButton = styled(Button)`
+  margin: 10px;
+  border-radius: 10;
+  backgroundColor: rgb(240, 43, 96);
 `
