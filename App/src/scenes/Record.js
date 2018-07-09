@@ -26,8 +26,9 @@ export default class Record extends Component {
         locationErrorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
     } else {
+      // 3分ごとに位置情報をfirebaseへ送る
       this.setState({
-        intervalId: setInterval(this.getLocationAsync, 3000),
+        intervalId: setInterval(this.getLocationAsync, 180000),
         status: true
       });
     }
@@ -49,13 +50,17 @@ export default class Record extends Component {
   };
 
   writeLocationToFirebase(location) {
-    firebase.database().ref("coodinates/" + moment().format()).set({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude
-    });
+    firebase.database()
+      .ref("/hashtags/" + this.props.hashtagId + "/coordinates")
+      .push({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        timestamp: moment().format()
+      });
   }
 
   onPressButton() {
+    const { hashtagId } = this.props;
     clearInterval(this.state.intervalId);
     this.setState({
       intervalId: null,
@@ -68,12 +73,12 @@ export default class Record extends Component {
       .then(
         res => {
           console.log(res.data);
-          Actions.end();
+          Actions.end({ hashtagId });
         })
       .catch(
         err => {
           console.log(err.request);
-          Actions.end();
+          Actions.end({ hashtagId });
           // Alert.alert(
           //   'APIを叩く際にエラーが発生しました。',
           //   '',
@@ -88,8 +93,9 @@ export default class Record extends Component {
 
   onPressCancelButton() {
     if (this.state.intervalId == null) {
+      // 3分ごとに位置情報をfirebaseへ送る
       this.setState({
-        intervalId: setInterval(this.getLocationAsync, 3000),
+        intervalId: setInterval(this.getLocationAsync, 180000),
         buttonName: '一時停止',
         status: true
       });

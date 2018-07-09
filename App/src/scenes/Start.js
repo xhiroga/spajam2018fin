@@ -14,9 +14,10 @@ export default class Start extends Component {
     };
   }
 
-  submitText = () => {
-    firebase.database().ref("/hashtags").set({text: this.state.hashtag});
-    Actions.record();
+  submitText = async(text) => {
+    // オブジェクト型でハッシュタグを保存し保存先のURLを取得
+    const hashtagUrl = await firebase.database().ref("/hashtags").push({content: text});
+    Actions.record({ hashtagId: hashtagUrl.key }); // 記録画面へidを渡す
   }
 
   render() {
@@ -36,7 +37,7 @@ export default class Start extends Component {
           </Tag>
           <StyledButton
             full
-            onPress={() => this.submitText()}
+            onPress={() => this.submitText(hashtag)}
           >
             <Text>このタグで出発</Text>
           </StyledButton>
