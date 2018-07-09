@@ -57,6 +57,7 @@ export default class Record extends Component {
   }
 
   onPressButton() {
+    const { hashtagId } = this.props;
     clearInterval(this.state.intervalId);
     this.setState({
       intervalId: null,
@@ -69,12 +70,12 @@ export default class Record extends Component {
       .then(
         res => {
           console.log(res.data);
-          Actions.end();
+          Actions.end({ hashtagId });
         })
       .catch(
         err => {
           console.log(err.request);
-          Actions.end();
+          Actions.end({ hashtagId });
           // Alert.alert(
           //   'APIを叩く際にエラーが発生しました。',
           //   '',
