@@ -89,8 +89,9 @@ export default class Record extends Component {
 
   onPressCancelButton() {
     if (this.state.intervalId == null) {
+      // 3分ごとに位置情報をfirebaseへ送る
       this.setState({
-        intervalId: setInterval(this.getLocationAsync, 3000),
+        intervalId: setInterval(this.getLocationAsync, 180000),
         buttonName: '一時停止',
         status: true
       });
