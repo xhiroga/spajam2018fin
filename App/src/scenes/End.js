@@ -4,11 +4,43 @@ import CameraRollExtended from 'react-native-store-photos-album';
 import { Button, Text, View } from 'native-base';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
+import * as firebase from 'firebase';
 import { Layout } from '../components/';
 
 const image = '../../img/Bitmap3.png';
 
 export default class End extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoad: false,
+      name: '旅のハッシュタグ'
+    }
+  }
+
+  componentWillMount = async() => {
+    const { hashtagId  } = this.props;
+    this.setState({ isLoad: true })
+    try {
+      const snapshot = await firebase.database().ref(`/hashtags/${hashtagId}`).once('value');
+      this.setState({
+        name: snapshot.val().content,
+        isLoad: false
+      })
+    } catch(err) {
+      console.log(err);
+      this.setState({ isLoad: false })
+      Alert.alert(
+        'APIを叩く際にエラーが発生しました。',
+        '',
+        [{
+          text: 'OK',
+          onPress: () => console.log(err.toString())
+        },],
+        { cancelable: false }
+      )
+    }
+  }
 
   // 画像の保存
   onPressSave() {
