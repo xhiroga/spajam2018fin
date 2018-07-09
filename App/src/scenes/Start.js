@@ -17,7 +17,7 @@ export default class Start extends Component {
 
   submitText = async(text) => {
     // オブジェクト型でハッシュタグを保存し保存先のURLを取得
-    const hashtagUrl = await firebase.database().ref("/hashtags").push(text);
+    const hashtagUrl = await firebase.database().ref("/hashtags").push({content: text});
     const hashtagId = await this.getHashtagId(hashtagUrl)
     Actions.record({ hashtagId }); // 記録画面へidを渡す
   }
