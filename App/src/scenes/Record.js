@@ -49,7 +49,7 @@ export default class Record extends Component {
   };
 
   writeLocationToFirebase(location) {
-    firebase.database().ref("/hashtags/" + this.props.hashtagId).push({
+    firebase.database().ref("/hashtags/" + this.props.hashtagId + "/coodinates").push({
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       timestamp: moment().format()
