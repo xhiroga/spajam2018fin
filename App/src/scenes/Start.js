@@ -14,8 +14,8 @@ export default class Start extends Component {
     };
   }
 
-  submitText = () => {
-    firebase.database().ref("/hashtags").set({text: this.state.hashtag});
+  submitText = text => {
+    firebase.database().ref("/hashtags").push(text);
     Actions.record();
   }
 
@@ -36,7 +36,7 @@ export default class Start extends Component {
           </Tag>
           <StyledButton
             full
-            onPress={() => this.submitText()}
+            onPress={() => this.submitText(hashtag)}
           >
             <Text>このタグで出発</Text>
           </StyledButton>
