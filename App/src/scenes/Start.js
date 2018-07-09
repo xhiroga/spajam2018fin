@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import { Image } from 'react-native';
-import { FIREBASE_DATABASE_URL } from 'react-native-dotenv'
 import { View, Content, Input, Button, Text } from 'native-base';
 import styled from 'styled-components';
 import { Layout } from '../components/';
@@ -18,13 +17,7 @@ export default class Start extends Component {
   submitText = async(text) => {
     // オブジェクト型でハッシュタグを保存し保存先のURLを取得
     const hashtagUrl = await firebase.database().ref("/hashtags").push({content: text});
-    const hashtagId = await this.getHashtagId(hashtagUrl)
-    Actions.record({ hashtagId }); // 記録画面へidを渡す
-  }
-
-  getHashtagId = hashtagUrl => {
-    const url = FIREBASE_DATABASE_URL + "/hashtags/"
-    return hashtagUrl.toString().replace(url, '');
+    Actions.record({ hashtagId: hashtagUrl.key }); // 記録画面へidを渡す
   }
 
   render() {
