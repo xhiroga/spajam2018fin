@@ -26,8 +26,9 @@ export default class Record extends Component {
         locationErrorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
     } else {
+      // 3分ごとに位置情報をfirebaseへ送る
       this.setState({
-        intervalId: setInterval(this.getLocationAsync, 3000),
+        intervalId: setInterval(this.getLocationAsync, 180000),
         status: true
       });
     }
