@@ -33,5 +33,5 @@ requests-toolbelt==0.7.0
 rsa==3.4.2
 six==1.11.0
 urllib3==1.23
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 wrapt==1.10.11
